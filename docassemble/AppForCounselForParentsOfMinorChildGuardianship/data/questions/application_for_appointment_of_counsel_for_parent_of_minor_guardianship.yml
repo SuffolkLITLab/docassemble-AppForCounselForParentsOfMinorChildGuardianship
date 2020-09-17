@@ -1,0 +1,266 @@
+---
+include:
+  - docassemble.MAVirtualCourt:basic-questions.yml
+---
+mandatory: True
+code: |
+  interview_metadata # make sure we initialize the object
+  if not defined("interview_metadata['applicationappointmentcounselguardianshipofminorparents0029']"):
+    interview_metadata.initializeObject('applicationappointmentcounselguardianshipofminorparents0029')
+  interview_metadata['applicationappointmentcounselguardianshipofminorparents0029'].update({
+    'title': 'Appointment of Counsel For Parent of Minor Child Guardianship of Minor',
+    'short title': 'Appointment of Counsel For Parent of Minor Child Guardianship of Minor',
+    'description': 'This form tells the court you cannot afford a lawyer so you need the court to appoint a lawyer for you. Then the state will pay the lawyer.',
+    'original_form': 'https://www.masslegalhelp.org/children-and-families/forms/mpc263-application-appointment-counsel-guardianship-of-minor-parents.pdf',
+    'allowed courts': [
+      'Probate and Family Court',
+    ],
+    'preferred court': 'Any court (no preferred court)',
+    'categories': [
+      'Guardianship',
+    ],
+    'logic block variable': 'applicationappointmentcounselguardianshipofminorparents0029',
+    'attachment block variable': 'applicationappointmentcounselguardianshipofminorparents0029_attachment',
+    'typical role': 'unknown',
+    'built_in_fields_used': [
+      {'variable': 'docket_number',
+       'transformed_variable': 'docket_numbers[0]',
+      },
+      {'variable': 'signature_date',
+       'transformed_variable': 'signature_date',
+      },
+      ],
+    'fields': [
+      {'variable': 'minor_name',
+       'transformed_variable': 'minor_name',
+      'field_type': 'text',
+      'field_data_type': 'text',
+      },
+      {'variable': 'court_division',
+       'transformed_variable': 'courts[0].division',
+      'field_type': 'text',
+      'field_data_type': 'text',
+      },
+      {'variable': 'requesting_party_name_first',
+       'transformed_variable': 'users[0].name.first',
+      'field_type': 'text',
+      'field_data_type': 'text',
+      },
+      {'variable': 'requesting_party_name_initial',
+       'transformed_variable': 'users[0].name.initial',
+      'field_type': 'text',
+      'field_data_type': 'text',
+      },
+      {'variable': 'requesting_party_name_last',
+       'transformed_variable': 'users[0].name.last',
+      'field_type': 'text',
+      'field_data_type': 'text',
+      },
+      {'variable': 'requesting_party_address_street_2',
+       'transformed_variable': 'users[0].address.unit',
+      'field_type': 'text',
+      'field_data_type': 'text',
+      },
+      {'variable': 'requesting_party_address_city',
+       'transformed_variable': 'users[0].address.city',
+      'field_type': 'text',
+      'field_data_type': 'text',
+      },
+      {'variable': 'requesting_party_address_street',
+       'transformed_variable': 'users[0].address.street',
+      'field_type': 'text',
+      'field_data_type': 'text',
+      },
+      {'variable': 'requesting_party_address_state',
+       'transformed_variable': 'users[0].address.state',
+      'field_type': 'text',
+      'field_data_type': 'text',
+      },
+      {'variable': 'requesting_party_address_zip',
+       'transformed_variable': 'users[0].address.zip',
+      'field_type': 'text',
+      'field_data_type': 'text',
+      },
+      {'variable': 'requesting_party_phone',
+       'transformed_variable': 'users[0].phone',
+      'field_type': 'text',
+      'field_data_type': 'text',
+      },
+      {'variable': 'requesting_party_email',
+       'transformed_variable': 'users[0].email',
+      'field_type': 'text',
+      'field_data_type': 'text',
+      },
+      {'variable': 'requesting_party_is_mother',
+       'transformed_variable': 'users[0].mother',
+      'field_type': 'yesno',
+      },
+      {'variable': 'requesting_party_is_father',
+       'transformed_variable': 'users[0].father',
+      'field_type': 'yesno',
+      },
+      {'variable': 'request_waiver_counsel_fee',
+       'transformed_variable': 'request_waiver_counsel_fee',
+      'field_type': 'yesno',
+      },
+      ],
+  })
+---
+question: |
+  Are you the minor's mother or father?
+fields:
+  - no label: mother_or_father
+    datatype: radio
+    choices:
+      -Mother: mother
+      -Father: father
+---
+code: |
+  users[0].mother = mother_or_father == "mother"
+  users[0].father = mother_or_father == "father"
+---
+question: |
+  Do you want to request a fee waiver?
+subquestion: |
+  The court may waive the $150.00 counsel fee assessment under G.L. c. 211D, § 2A (f) based on {indigency}.
+yesno: request_waiver_counsel_fee
+terms:
+  indigency: |
+    You may qualify as indigent if you are covered under certain programs (TAFDC, EAEDC, SSI, Mass Health, or Massachusetts Veteran Benefits), your income is 125% or less of the Federal Povery Guidelines, or if paying the court cost would deprive you or your dependants of "the necessities of life" (food, shelter, clothing, etc...). 
+---
+question: |
+  What court is your case being heard in?
+fields:
+  - 'Court division': courts[0].division
+---
+question: |
+  What is the child's name?
+fields:
+  - 'Name of Child': minor_name
+---
+question: |
+  What is your address and contact information?
+fields:
+  - 'Street Address': users[0].address.street
+  - 'Apartment or Unit Number': users[0].address.unit
+    required: False
+  - 'City': users[0].address.city
+  - 'State': users[0].address.state
+  - 'ZIP Code': users[0].address.zip
+  - 'Phone Number': users[0].phone
+  - 'Email Address': users[0].email
+---
+question: |
+  What is your name?
+fields:
+  - 'First Name': users[0].name.first
+  - 'Middle Initial': users[0].name.initial
+    required: False
+  - 'Last Name': users[0].name.last
+---
+progress: 100
+mandatory: True
+question: |
+  Placeholder download screen
+subquestion: |
+  Placeholder
+  
+  ### Next steps
+  
+  1. Call the court to determine if they are accepting forms electronically.
+  2. If not, download this form and file it with the selected court.
+  
+  Below is a preview of your form.
+  
+  ${applicationappointmentcounselguardianshipofminorparents0029_attachment }
+attachment code: applicationappointmentcounselguardianshipofminorparents0029_attachment
+---
+need: applicationappointmentcounselguardianshipofminorparents0029
+attachment:
+    variable name: applicationappointmentcounselguardianshipofminorparents0029_attachment
+    name: Appointment of Counsel For Parent of Minor Child Guardianship of Minor
+    filename: Application_for_Appointment_of_Counsel_For_Parent_of_Minor_Child_Guardianship_of_Minor
+    pdf template file: mpc263-application-appointment-counsel-guardianship-of-minor-parents-pre-processed.pdf
+    fields: 
+      - "docket_number": ${ docket_numbers[0] }
+      - "signature_date": ${ signature_date }
+      - "minor_name": ${ minor_name }
+      - "court_division": ${ courts[0].division }
+      - "requesting_party_name_first": ${ users[0].name.first }
+      - "requesting_party_name_initial": ${ users[0].name.initial }
+      - "requesting_party_name_last": ${ users[0].name.last }
+      - "requesting_party_address_street_2": ${ users[0].address.unit }
+      - "requesting_party_address_city": ${ users[0].address.city }
+      - "requesting_party_address_street": ${ users[0].address.street }
+      - "requesting_party_address_state": ${ users[0].address.state }
+      - "requesting_party_address_zip": ${ users[0].address.zip }
+      - "requesting_party_phone": ${ users[0].phone }
+      - "requesting_party_email": ${ users[0].email }
+      - "requesting_party_is_mother": ${ users[0].mother }
+      - "requesting_party_is_father": ${ users[0].father }
+      - "request_waiver_counsel_fee": ${ request_waiver_counsel_fee }
+      - "requesting_party_signature": ${ users[0].signature }
+---
+comment: |
+  This question is used to introduce your interview. Please customize
+continue button field: applicationappointmentcounselguardianshipofminorparents0029_intro
+question: |
+  Appointment of Counsel For Parent of Minor Child Guardianship of Minor
+subquestion: |
+  Parents of a child involved in a guardianship proceeding may use this form to request that the court appoint a lawyer for them.
+---
+id: interview_order_applicationappointmentcounselguardianshipofminorparents0029
+code: |
+  # This is a placeholder to control logic flow in this interview
+  # It was generated from interview_generator.py as an 'interview order' type question.
+  basic_questions_intro_screen 
+  applicationappointmentcounselguardianshipofminorparents0029_intro
+  # Set the preferred/allowed courts for this interview
+  preferred_court = interview_metadata["applicationappointmentcounselguardianshipofminorparents0029"]["preferred court"]
+  allowed_courts = interview_metadata["applicationappointmentcounselguardianshipofminorparents0029"]["allowed courts"]
+  minor_name
+  courts[0].division
+  users[0].name.first
+  users[0].address.street
+  users[0].mother
+  request_waiver_counsel_fee
+  docket_numbers[0]
+  signature_date
+  # By default, we'll mark any un-filled fields as DAEmpty(). This helps avoid errors if you intentionally hide a logic branch or mark a question not required
+  # Comment out the line below if you don't want this behavior. 
+  mark_unfilled_fields_empty(interview_metadata["applicationappointmentcounselguardianshipofminorparents0029"])
+  applicationappointmentcounselguardianshipofminorparents0029_preview_question # Pre-canned preview screen
+  basic_questions_signature_flow
+  applicationappointmentcounselguardianshipofminorparents0029 = True
+---
+continue button field: applicationappointmentcounselguardianshipofminorparents0029_preview_question
+question: |
+  Placeholder preview screen
+subquestion: |
+  Here is a preview of the form you'll sign on the next page. 
+  
+   ${applicationappointmentcounselguardianshipofminorparents0029_attachment_preview}
+---
+attachment:
+    variable name: applicationappointmentcounselguardianshipofminorparents0029_attachment_preview
+    name: Appointment of Counsel For Parent of Minor Child Guardianship of Minor
+    filename: Application_for_Appointment_of_Counsel_For_Parent_of_Minor_Child_Guardianship_of_Minor
+    pdf template file: mpc263-application-appointment-counsel-guardianship-of-minor-parents-pre-processed.pdf
+    fields: 
+      - "docket_number": ${ docket_numbers[0] }
+      - "signature_date": ${ signature_date }
+      - "minor_name": ${ minor_name }
+      - "court_division": ${ courts[0].division }
+      - "requesting_party_name_first": ${ users[0].name.first }
+      - "requesting_party_name_initial": ${ users[0].name.initial }
+      - "requesting_party_name_last": ${ users[0].name.last }
+      - "requesting_party_address_street_2": ${ users[0].address.unit }
+      - "requesting_party_address_city": ${ users[0].address.city }
+      - "requesting_party_address_street": ${ users[0].address.street }
+      - "requesting_party_address_state": ${ users[0].address.state }
+      - "requesting_party_address_zip": ${ users[0].address.zip }
+      - "requesting_party_phone": ${ users[0].phone }
+      - "requesting_party_email": ${ users[0].email }
+      - "requesting_party_is_mother": ${ users[0].mother }
+      - "requesting_party_is_father": ${ users[0].father }
+      - "request_waiver_counsel_fee": ${ request_waiver_counsel_fee }
