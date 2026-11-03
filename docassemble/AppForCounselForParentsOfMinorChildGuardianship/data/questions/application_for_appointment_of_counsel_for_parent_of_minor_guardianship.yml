@@ -106,6 +106,7 @@ code: |
       ],
   })
 ---
+id: "are you the minors mother or father"
 question: |
   Are you the minor's mother or father?
 fields:
@@ -119,25 +120,31 @@ code: |
   users[0].mother = mother_or_father == "mother"
   users[0].father = mother_or_father == "father"
 ---
+id: "do you want to request a fee waiver"
 question: |
   Do you want to request a fee waiver?
 subquestion: |
   The court may waive the $150.00 counsel fee assessment under G.L. c. 211D, § 2A (f) based on {indigency}.
-yesno: request_waiver_counsel_fee
+fields:
+  - no label: request_waiver_counsel_fee
+    datatype: yesnoradio
 terms:
   indigency: |
     You may qualify as indigent if you are covered under certain programs (TAFDC, EAEDC, SSI, Mass Health, or Massachusetts Veteran Benefits), your income is 125% or less of the Federal Povery Guidelines, or if paying the court cost would deprive you or your dependants of "the necessities of life" (food, shelter, clothing, etc...). 
 ---
+id: "what court is your case being heard in"
 question: |
   What court is your case being heard in?
 fields:
   - 'Court division': courts[0].division
 ---
+id: "what is the childs name"
 question: |
   What is the child's name?
 fields:
   - 'Name of Child': minor_name
 ---
+id: "what is your address and contact information"
 question: |
   What is your address and contact information?
 fields:
@@ -150,6 +157,7 @@ fields:
   - 'Phone Number': users[0].phone
   - 'Email Address': users[0].email
 ---
+id: "what is your name"
 question: |
   What is your name?
 fields:
@@ -160,6 +168,7 @@ fields:
 ---
 progress: 100
 mandatory: True
+id: "placeholder download screen"
 question: |
   Placeholder download screen
 subquestion: |
@@ -204,6 +213,7 @@ attachment:
 comment: |
   This question is used to introduce your interview. Please customize
 continue button field: applicationappointmentcounselguardianshipofminorparents0029_intro
+id: "appointment of counsel for parent of minor child guardianship of minor"
 question: |
   Appointment of Counsel For Parent of Minor Child Guardianship of Minor
 subquestion: |
@@ -234,6 +244,7 @@ code: |
   applicationappointmentcounselguardianshipofminorparents0029 = True
 ---
 continue button field: applicationappointmentcounselguardianshipofminorparents0029_preview_question
+id: "placeholder preview screen"
 question: |
   Placeholder preview screen
 subquestion: |
